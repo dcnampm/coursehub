@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login - Course Hub System</title>
+  <link rel="stylesheet" th:href="@{/css/login.css}">
+  <link rel="stylesheet" th:href="@{/css/footer.css}">
+  <link rel="stylesheet" th:href="@{/css/header.css}">
+</head>
+<body>
+
+<!-- Header -->
+<header th:replace="fragments/header :: header"></header>
+
+<div class="login-container">
+  <h1>HỆ THỐNG QUẢN LÝ ĐĂNG KÝ KHÓA HỌC</h1>
+  <h3>ĐĂNG NHẬP</h3>
+
+  <form th:action="@{/login}" method="post">
+    <div class="form-group">
+      <label th:for="email">*</label>
+      <input type="email" id="email" name="email" placeholder="Email" required>
+    </div>
+    <div class="form-group">
+      <label th:for="password">*</label>
+      <input type="password" id="password" name="password" placeholder="Password" required>
+    </div>
+    <div class="forgot-password">
+      <a href="#">Quên mật khẩu</a>
+    </div>
+    <div class="register">
+      <a href="#">Đăng ký</a>
+    </div>
+    <button type="submit" class="login-button">Đăng nhập</button>
+
+    <!-- Hiển thị thông báo lỗi nếu có -->
+    <div class="error-message" th:if="${error}">
+      <p th:text="${error}" style="color:red;"></p>
+    </div>
+  </form>
+</div>
+
+<footer th:replace="fragments/footer :: footer"></footer>
+</body>
+</html>

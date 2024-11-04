@@ -1,0 +1,116 @@
+/* Cơ bản */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+/* Navbar */
+.navbar {
+    background-color: #0063EC;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    overflow: visible;
+}
+
+.navbar ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.navbar ul li {
+    position: relative;
+    color: white;
+}
+
+.navbar ul li a, .navbar ul li span {
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 14px 20px;
+    text-decoration: none;
+    border-right: 1px solid #ccc;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.navbar ul li a:last-child, .navbar ul li span:last-child {
+    border-right: none;
+}
+
+.navbar ul li a:hover, .navbar ul li span:hover {
+    background-color: #007bff;
+    color: white;
+}
+
+/* Submenu */
+.sub-menu {
+    display: none;
+    position: absolute;
+    left: 0;
+    top: 100%;
+    background-color: #0063EC;
+    color: white;
+    min-width: 200px;
+    z-index: 1000;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.sub-menu li {
+    display: block;
+}
+
+.sub-menu li a {
+    padding: 10px;
+    text-decoration: none;
+    background-color: #007bff;
+    color: white;
+    display: block;
+    border-bottom: 1px solid #ccc;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.sub-menu li a:hover {
+    background-color: #575757;
+    color: white;
+}
+
+/* Hiển thị submenu khi hover vào dropdown */
+.dropdown {
+    display: block;
+    padding: 0;
+    margin: 0;
+    position: relative;
+}
+
+.dropdown:hover .sub-menu {
+    display: block;
+}
+
+.dropdown > span {
+    cursor: pointer;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .navbar ul {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .navbar ul li {
+        width: 100%;
+    }
+
+    .navbar ul li a, .navbar ul li span {
+        text-align: left;
+        padding: 12px 20px;
+    }
+
+    .sub-menu {
+        position: relative;
+        width: 100%;
+    }
+}
