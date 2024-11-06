@@ -27,4 +27,13 @@ public class Enrollment {
 
     private boolean isActive;
 
+    public Enrollment(Student student, Course course) {
+        this.student = student;
+        this.course = course;
+        this.enrollmentDate = LocalDateTime.now();
+        this.isActive = true;
+    }
+
+    public Enrollment() {}
+
 }

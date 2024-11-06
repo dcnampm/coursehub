@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thêm khóa học</title>
+    <link rel="stylesheet" th:href="@{/css/header.css}">
+    <link rel="stylesheet" th:href="@{/css/footer.css}">
+    <link rel="stylesheet" th:href="@{/css/navbar.css}">
+    <link rel="stylesheet" th:href="@{/css/add-form.css}">
+</head>
+<body>
+<!-- Header -->
+<header th:replace="fragments/header :: header"></header>
+
+<!-- Navbar -->
+<nav th:replace="fragments/navbar-admin :: navbar"></nav>
+
+<!-- Main content -->
+<div class="container">
+    <h1>Thêm khóa học</h1>
+
+    <form th:action="@{/courses}" th:object="${course}" method="post">
+        <div class="form-group">
+            <label for="name">Tên khóa học</label>
+            <input type="text" id="name" th:field="*{name}" placeholder="Nhập tên khóa học" required />
+        </div>
+
+        <div class="form-group">
+            <label for="description">Mô tả</label>
+            <textarea id="description" th:field="*{description}" placeholder="Nhập mô tả" required></textarea>
+        </div>
+
+        <div class="form-group">
+            <label for="maxSize">Số lượng tối đa</label>
+            <input type="number" id="maxSize" th:field="*{maxSize}" placeholder="Nhập số lượng tối đa" min="1" required />
+        </div>
+
+        <div class="form-group">
+            <label for="startDate">Ngày bắt đầu</label>
+            <input type="datetime-local" id="startDate" th:field="*{startDate}" required />
+        </div>
+
+        <div class="form-group">
+            <label for="endDate">Ngày kết thúc</label>
+            <input type="datetime-local" id="endDate" th:field="*{endDate}" required />
+        </div>
+
+        <div class="form-actions">
+            <button type="submit">Xác nhận</button>
+        </div>
+
+        <div class="back-button">
+            <a th:href="@{/courses}" class="button">Hủy</a>
+        </div>
+    </form>
+
+    <div id="toast-error" style="color: red; text-align: center; font-size: 16px; margin: 20px 0;">
+        <span th:text="${error}"></span> <!-- Hiển thị thông báo lỗi nếu có -->
+    </div>
+</div>
+
+<!-- Footer -->
+<footer th:replace="fragments/footer :: footer"></footer>
+</body>
+</html>

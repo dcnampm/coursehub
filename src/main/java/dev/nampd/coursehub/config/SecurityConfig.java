@@ -1,6 +1,6 @@
 package dev.nampd.coursehub.config;
 
-import dev.nampd.coursehub.auth.JwtAuthenticationFilter;
+import jakarta.servlet.DispatcherType;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -11,18 +11,18 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 
 @Configuration
 @EnableMethodSecurity
 @EnableWebSecurity
 @RequiredArgsConstructor
 public class SecurityConfig {
-    private final JwtAuthenticationFilter jwtAuthenticationFilter;
+    private final AuthenticationSuccessHandler customSuccessHandler;
     private final AuthenticationProvider authenticationProvider;
+
     private static final String[] WHITE_LIST_URL = {
-            "/register",
-            "/login",
+            "/auth/**",
             "/css/**",
             "/js/**",
             "/images/**"
@@ -30,20 +30,34 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        http.csrf(AbstractHttpConfigurer::disable)
-                .authorizeHttpRequests(request ->
-                                request.requestMatchers(WHITE_LIST_URL)
-                                        .permitAll()
-                                        .anyRequest()
-//                                        .authenticated()
-                                        .permitAll()
-                )
-                .sessionManagement(session -> session
-                        .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                )
-                .authenticationProvider(authenticationProvider)
-                .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
+        http
+                .csrf(AbstractHttpConfigurer::disable)
+                .authorizeHttpRequests(authorize -> authorize
+                        .dispatcherTypeMatchers(DispatcherType.FORWARD, DispatcherType.INCLUDE)
+                        .permitAll()
+                        .requestMatchers(WHITE_LIST_URL)
+                        .permitAll()
+                        .requestMatchers("/admin/**").hasRole("ADMIN")
+                        .anyRequest().authenticated())
+                .formLogin(formLogin -> formLogin
+                        .loginPage("/login")
+                        .failureUrl("/login?error")
+                        .successHandler(customSuccessHandler)
+                        .permitAll())
+                .sessionManagement((sessionManagement) -> sessionManagement
+                        .sessionCreationPolicy(SessionCreationPolicy.ALWAYS)
+                        .invalidSessionUrl("/login")
+                        .maximumSessions(1)
+                        .maxSessionsPreventsLogin(false))
+                .logout(logout -> logout
+                        .logoutUrl("/logout")
+                        .deleteCookies("JSESSIONID")
+                        .invalidateHttpSession(true))
+                .exceptionHandling(ex -> ex
+                        .accessDeniedPage("/access-deny"))
+                .authenticationProvider(authenticationProvider);
 
         return http.build();
+
     }
 }

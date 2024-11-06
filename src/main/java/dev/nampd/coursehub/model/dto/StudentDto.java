@@ -9,11 +9,11 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class StudentDTO {
+public class StudentDto {
     private Long id;
     private String fullName;
     private String email;
     private String password;
     private String role;
-    private List<EnrollmentDTO> enrollments;
+    private List<EnrollmentDto> enrollments;
 }

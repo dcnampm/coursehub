@@ -1,12 +1,14 @@
 package dev.nampd.coursehub.mapper;
 
-import dev.nampd.coursehub.model.dto.EnrollmentDTO;
-import dev.nampd.coursehub.model.dto.StudentDTO;
+import dev.nampd.coursehub.model.dto.EnrollmentDto;
+import dev.nampd.coursehub.model.dto.StudentDto;
 import dev.nampd.coursehub.model.entity.Role;
 import dev.nampd.coursehub.model.entity.Student;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 
+@Component
 public class StudentMapper {
     private final EnrollmentMapper enrollmentMapper;
 
@@ -14,12 +16,12 @@ public class StudentMapper {
         this.enrollmentMapper = enrollmentMapper;
     }
 
-    public StudentDTO toStudentDTO(Student student) {
-        List<EnrollmentDTO> enrollments = student.getEnrollments().stream()
-                .map(enrollmentMapper::toEnrollmentDTO)
+    public StudentDto toStudentDto(Student student) {
+        List<EnrollmentDto> enrollments = student.getEnrollments().stream()
+                .map(enrollmentMapper::toEnrollmentDto)
                 .toList();
 
-        return new StudentDTO(
+        return new StudentDto(
                 student.getId(),
                 student.getFullName(),
                 student.getEmail(),
@@ -29,16 +31,16 @@ public class StudentMapper {
         );
     }
 
-    public Student toStudent(StudentDTO studentDTO) {
-        if (studentDTO == null) {
+    public Student toStudent(StudentDto studentDto) {
+        if (studentDto == null) {
             return null;
         }
         Student student = new Student();
 
-        student.setFullName(studentDTO.getFullName());
-        student.setEmail(studentDTO.getEmail());
-        student.setPassword(studentDTO.getPassword());
-        student.setRole(Role.valueOf(studentDTO.getRole()));
+        student.setFullName(studentDto.getFullName());
+        student.setEmail(studentDto.getEmail());
+        student.setPassword(studentDto.getPassword());
+        student.setRole(Role.valueOf(studentDto.getRole()));
 
         return student;
     }

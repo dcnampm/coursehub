@@ -1,43 +1,49 @@
 package dev.nampd.coursehub.mapper;
 
-import dev.nampd.coursehub.model.dto.CourseDTO;
-import dev.nampd.coursehub.model.dto.EnrollmentDTO;
+import dev.nampd.coursehub.model.dto.CourseDto;
+import dev.nampd.coursehub.model.dto.EnrollmentDto;
 import dev.nampd.coursehub.model.entity.Course;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Component
 public class CourseMapper {
     private final EnrollmentMapper enrollmentMapper;
 
     public CourseMapper(EnrollmentMapper enrollmentMapper) {
         this.enrollmentMapper = enrollmentMapper;
     }
-    public CourseDTO toCourseDTO(Course course) {
-        List<EnrollmentDTO> enrollments = course.getEnrollments().stream()
-                .map(enrollmentMapper::toEnrollmentDTO)
+    public CourseDto toCourseDto(Course course) {
+        List<EnrollmentDto> enrollments = course.getEnrollments().stream()
+                .map(enrollmentMapper::toEnrollmentDto)
                 .collect(Collectors.toList());
 
-        return new CourseDTO(
+        return new CourseDto(
                 course.getId(),
                 course.getName(),
                 course.getDescription(),
+                course.getStartDate(),
+                course.getEndDate(),
                 course.getMaxSize(),
                 course.isFull(),
                 enrollments
         );
     }
 
-    public Course toCourse(CourseDTO courseDTO) {
-        if (courseDTO == null) {
+    public Course toCourse(CourseDto courseDto) {
+        if (courseDto == null) {
             return null;
         }
         Course course = new Course();
 
-        course.setName(courseDTO.getName());
-        course.setDescription(courseDTO.getDescription());
-        course.setMaxSize(courseDTO.getMaxSize());
-        course.setFull(courseDTO.isFull());
+        course.setName(courseDto.getName());
+        course.setDescription(courseDto.getDescription());
+        course.setStartDate(courseDto.getStartDate());
+        course.setEndDate(courseDto.getEndDate());
+        course.setMaxSize(courseDto.getMaxSize());
+        course.setFull(courseDto.isFull());
 
         return course;
     }

@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Danh sách khóa học</title>
+    <link rel="stylesheet" th:href="@{/css/list.css}">
+    <link rel="stylesheet" th:href="@{/css/header.css}">
+    <link rel="stylesheet" th:href="@{/css/footer.css}">
+    <link rel="stylesheet" th:href="@{/css/navbar.css}">
+    <link rel="stylesheet" th:href="@{/css/pagination.css}">
+</head>
+<body>
+
+<!-- Header -->
+<header th:replace="fragments/header :: header"></header>
+
+<!-- Navbar -->
+<nav th:replace="fragments/navbar-admin :: navbar"></nav>
+
+<!-- Main content -->
+<div class="container">
+    <h1>Danh sách khóa học</h1>
+
+    <div id="courseTable">
+        <table class="common-table">
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Tên khóa học</th>
+                <th>Mô tả</th>
+                <th>Số lượng sinh viên</th>
+                <th>Trình trạng</th>
+                <th>Tác vụ</th>
+            </tr>
+            </thead>
+            <tbody id="studentData">
+            <tr th:each="course : ${courses}">
+                <td th:text="${course.id}"></td>
+                <td th:text="${course.name}"></td>
+                <td th:text="${course.description}"></td>
+                <td th:text="${course.maxSize}"></td>
+                <td style="text-align: center;">
+                    <form th:action="@{/courses/{id}(id=${course.id})}" method="get" style="display:inline;">
+                        <button type="submit">Xem danh sách đăng ký</button>
+                    </form> |
+                    <form th:action="@{/courses/edit/{id}(id=${course.id})}" method="get" style="display:inline;">
+                        <button type="submit">Sửa</button>
+                    </form> |
+
+                    <form th:action="@{/courses/delete/{id}(id=${course.id})}" method="post" style="display:inline;">
+                        <input type="hidden" name="_method" value="delete">
+                        <button type="submit" onclick="return confirm('Bạn có chắc chắn muốn xóa khóa học này?')" th:text="#{button.delete}">Xóa</button>
+                    </form>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div th:replace="fragments/pagination :: simple-pagination(baseUrl='/courses', totalPages=${totalPages}, currentPage=${currentPage})"></div>
+
+    <div class="create-button-container">
+        <a href="/courses/new" class="create-button">Tạo mới</a>
+    </div>
+</div>
+
+<!-- Footer -->
+<footer th:replace="fragments/footer :: footer"></footer>
+
+</body>
+</html>

@@ -7,7 +7,7 @@ import java.time.LocalDateTime;
 
 @Data
 @AllArgsConstructor
-public class EnrollmentDTO {
+public class EnrollmentDto {
     private Long id;
     private Long courseId;
     private String courseName;

@@ -1,11 +1,13 @@
 package dev.nampd.coursehub.mapper;
 
-import dev.nampd.coursehub.model.dto.EnrollmentDTO;
+import dev.nampd.coursehub.model.dto.EnrollmentDto;
 import dev.nampd.coursehub.model.entity.Enrollment;
+import org.springframework.stereotype.Component;
 
+@Component
 public class EnrollmentMapper {
-    public EnrollmentDTO toEnrollmentDTO(Enrollment enrollment) {
-        return new EnrollmentDTO(
+    public EnrollmentDto toEnrollmentDto(Enrollment enrollment) {
+        return new EnrollmentDto(
                 enrollment.getId(),
                 enrollment.getCourse().getId(),
                 enrollment.getCourse().getName(),
