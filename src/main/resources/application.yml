@@ -1,12 +1,6 @@
 spring:
   application:
     name: course hub
-    security:
-      jwt:
-        secret-key: 5d9bcee44a9f0549cf53d86206bf8d1e98c675ce843bab16685e9d1056e64633
-        expiration: 86400000 # a day
-      refresh-token:
-        expiration: 604800000 # 7 days
   datasource:
     url: jdbc:mysql://localhost:3304/course_hub
     username: root
@@ -27,3 +21,11 @@ spring:
   messages:
     basename: i18n/messages
     encoding: UTF-8
+
+application:
+  security:
+    jwt:
+      secret-key: 5d9bcee44a9f0549cf53d86206bf8d1e98c675ce843bab16685e9d1056e64633
+      expiration: 86400000 # a day
+    refresh-token:
+      expiration: 604800000 # 7 days

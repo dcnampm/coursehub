@@ -4,7 +4,7 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -20,31 +20,29 @@ public class Course {
     private String name;
     private String description;
     @Column(nullable = false)
-    private int remainingSlots;
     private int maxSize;
+    private int numberOfSessions;
     @Column(nullable = false)
     private boolean isFull;
-    private LocalDateTime startDate;
-    private LocalDateTime endDate;
+    private LocalDate startDate;
+    private LocalDate endDate;
 
     @OneToMany(mappedBy = "course", cascade = CascadeType.ALL)
     private Set<Enrollment> enrollments = new HashSet<>();
 
+    public Course() {}
+
+    public Course(String name, String description, int maxSize, int numberOfSessions, LocalDate startDate, LocalDate endDate) {
+        this.name = name;
+        this.description = description;
+        this.maxSize = maxSize;
+        this.numberOfSessions = numberOfSessions;
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.isFull = false;
+    }
+
     public void updateStatus() {
         this.isFull = enrollments.size() >= maxSize;
-    }
-
-    public void decrementRemainingSlots() {
-        if (remainingSlots > 0 && remainingSlots <= maxSize) {
-            remainingSlots--;
-            updateStatus();
-        }
-    }
-
-    public void incrementRemainingSlots() {
-        if (remainingSlots < maxSize) {
-            remainingSlots++;
-            updateStatus();
-        }
     }
 }

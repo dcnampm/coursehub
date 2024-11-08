@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -27,11 +27,13 @@
     <div class="col-md-4 mb-4" th:each="course : ${courses}">
       <div class="card h-100">
         <div class="card-body">
+          <!-- Course Title -->
           <h5 class="card-title" th:text="${course.name}">Tên khóa học</h5>
-
+          <!-- Course Subtitle -->
           <h6 class="card-subtitle mb-2 text-muted" th:text="${course.description}">Mô tả khóa học</h6>
-
+          <!-- Course Details -->
           <p class="card-text">
+            <!-- Số lượng sinh viên -->
             <strong>Số lượng sinh viên:</strong>
             <span th:text="${course.enrollments.size()} + '/' + ${course.maxSize}"></span><br>
 
@@ -39,24 +41,22 @@
             <span th:class="${course.isFull() ? 'text-danger' : 'text-success'}"
                   th:text="${course.isFull() ? 'Đã đầy' : 'Còn chỗ'}"
                   style="font-style: italic;">Còn chỗ</span><br>
-
-            <span th:text="${course.status}" th:class="${course.status == 'Đã kết thúc' ? 'text-danger' : (course.status == 'Đang diễn ra' ? 'text-warning' : 'text-success')}">
-                Trạng thái
-            </span><br>
           </p>
 
           <div class="d-flex justify-content-between">
-            <a th:href="@{/courses/detail/{id}(id=${course.id})}" class="btn btn-primary">Xem chi tiết</a>
+            <a th:href="@{/courses/detail/{id}(id=${course.id})}" class="btn btn-info">Xem chi tiết</a>
           </div>
         </div>
       </div>
     </div>
   </div>
 
+  <!-- Pagination -->
   <div th:replace="fragments/pagination :: simple-pagination(baseUrl='/courses', totalPages=${totalPages}, currentPage=${currentPage})"></div>
 
+  <!-- Create New Course Button -->
   <div class="text-center mt-4">
-    <a href="/courses/new" class="btn btn-success" sec:authorize="hasRole('ADMIN')">Tạo mới</a>
+    <a href="/courses/new" class="btn btn-success">Tạo mới</a>
   </div>
 </div>
 

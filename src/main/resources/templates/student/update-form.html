@@ -14,7 +14,7 @@
 <header th:replace="fragments/header :: header"></header>
 
 <!-- Navbar -->
-<nav th:replace="fragments/navbar-admin :: navbar"></nav>
+<nav th:replace="fragments/navbar :: navbar"></nav>
 
 <!-- Main content -->
 <div class="container">
@@ -30,7 +30,7 @@
             <label for="role">Vai trò</label>
             <select id="role" th:field="*{role}">
                 <option value="ADMIN">Admin</option>
-                <option value="USER">Nhân viên</option>
+                <option value="STUDENT">Sinh viên</option>
             </select>
         </div>
 

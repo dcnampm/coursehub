@@ -15,21 +15,26 @@ public class CourseMapper {
     public CourseMapper(EnrollmentMapper enrollmentMapper) {
         this.enrollmentMapper = enrollmentMapper;
     }
+
     public CourseDto toCourseDto(Course course) {
         List<EnrollmentDto> enrollments = course.getEnrollments().stream()
                 .map(enrollmentMapper::toEnrollmentDto)
                 .collect(Collectors.toList());
 
-        return new CourseDto(
+        CourseDto courseDto = new CourseDto(
                 course.getId(),
                 course.getName(),
                 course.getDescription(),
+                course.getMaxSize(),
+                course.getNumberOfSessions(),
+                course.isFull(),
                 course.getStartDate(),
                 course.getEndDate(),
-                course.getMaxSize(),
-                course.isFull(),
                 enrollments
         );
+        courseDto.setRemainingSlots(course.getMaxSize() - enrollments.size());
+
+        return courseDto;
     }
 
     public Course toCourse(CourseDto courseDto) {
@@ -40,10 +45,11 @@ public class CourseMapper {
 
         course.setName(courseDto.getName());
         course.setDescription(courseDto.getDescription());
+        course.setMaxSize(courseDto.getMaxSize());
+        course.setNumberOfSessions(courseDto.getNumberOfSessions());
+        course.setFull(courseDto.isFull());
         course.setStartDate(courseDto.getStartDate());
         course.setEndDate(courseDto.getEndDate());
-        course.setMaxSize(courseDto.getMaxSize());
-        course.setFull(courseDto.isFull());
 
         return course;
     }

@@ -1,5 +1,6 @@
 package dev.nampd.coursehub.service;
 
+import dev.nampd.coursehub.model.dto.RegisterDto;
 import dev.nampd.coursehub.model.dto.StudentDto;
 import dev.nampd.coursehub.model.response.PagedResponse;
 
@@ -16,4 +17,6 @@ public interface StudentService {
     void deleteStudent(Long id);
 
     PagedResponse<StudentDto> getStudentsPaginated(int page, int size);
+
+    void registerNewStudent(RegisterDto registerDto);
 }

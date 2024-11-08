@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Entity
@@ -23,14 +24,14 @@ public class Enrollment {
     @JoinColumn(name = "course_id")
     private Course course;
 
-    private LocalDateTime enrollmentDate;
+    private LocalDate enrollmentDate;
 
     private boolean isActive;
 
     public Enrollment(Student student, Course course) {
         this.student = student;
         this.course = course;
-        this.enrollmentDate = LocalDateTime.now();
+        this.enrollmentDate = LocalDate.now();
         this.isActive = true;
     }
 

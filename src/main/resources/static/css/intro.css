@@ -1,0 +1,34 @@
+.intro-container {
+    background-color: #e0f7f7;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+}
+.intro-text h2 {
+    color: #2c3e50;
+    font-size: 2.5rem;
+}
+.intro-text h2 strong {
+    color: #1d936a;
+}
+.intro-text p {
+    font-size: 1.2rem;
+    color: #555;
+    margin-bottom: 20px;
+}
+.btn-custom {
+    background-color: #ff6b6b;
+    color: white;
+    border-radius: 50px;
+    padding: 10px 20px;
+    font-size: 1rem;
+    text-decoration: none;
+}
+.btn-custom:hover {
+    background-color: #ff4b4b;
+    color: white;
+}
+.image-section img {
+    max-width: 100%;
+    height: auto;
+}

@@ -9,8 +9,8 @@ public class EnrollmentMapper {
     public EnrollmentDto toEnrollmentDto(Enrollment enrollment) {
         return new EnrollmentDto(
                 enrollment.getId(),
+                enrollment.getStudent().getId(),
                 enrollment.getCourse().getId(),
-                enrollment.getCourse().getName(),
                 enrollment.getEnrollmentDate(),
                 enrollment.isActive()
         );

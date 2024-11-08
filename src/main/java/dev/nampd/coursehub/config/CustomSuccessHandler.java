@@ -55,6 +55,7 @@ public class CustomSuccessHandler implements AuthenticationSuccessHandler {
         StudentDto student = this.studentService.getStudentByEmail(email);
         if (student != null) {
             session.setAttribute("fullName", student.getFullName());
+            session.setAttribute("id", student.getId());
         }
     }
 
@@ -71,5 +72,4 @@ public class CustomSuccessHandler implements AuthenticationSuccessHandler {
         redirectStrategy.sendRedirect(request, response, targetUrl);
         clearAuthenticationAttributes(request, authentication);
     }
-
 }

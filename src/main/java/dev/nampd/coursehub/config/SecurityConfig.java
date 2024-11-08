@@ -22,10 +22,12 @@ public class SecurityConfig {
     private final AuthenticationProvider authenticationProvider;
 
     private static final String[] WHITE_LIST_URL = {
-            "/auth/**",
+            "/login/**",
+            "/register/**",
             "/css/**",
             "/js/**",
-            "/images/**"
+            "/images/**",
+            "/"
     };
 
     @Bean
@@ -38,7 +40,8 @@ public class SecurityConfig {
                         .requestMatchers(WHITE_LIST_URL)
                         .permitAll()
                         .requestMatchers("/admin/**").hasRole("ADMIN")
-                        .anyRequest().authenticated())
+                        .anyRequest()
+                        .authenticated())
                 .formLogin(formLogin -> formLogin
                         .loginPage("/login")
                         .failureUrl("/login?error")

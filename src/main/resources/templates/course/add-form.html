@@ -14,7 +14,7 @@
 <header th:replace="fragments/header :: header"></header>
 
 <!-- Navbar -->
-<nav th:replace="fragments/navbar-admin :: navbar"></nav>
+<nav th:replace="fragments/navbar :: navbar"></nav>
 
 <!-- Main content -->
 <div class="container">
@@ -32,18 +32,23 @@
         </div>
 
         <div class="form-group">
-            <label for="maxSize">Số lượng tối đa</label>
-            <input type="number" id="maxSize" th:field="*{maxSize}" placeholder="Nhập số lượng tối đa" min="1" required />
+            <label for="maxSize">Số lượng sinh viên tối đa</label>
+            <input type="number" id="maxSize" th:field="*{maxSize}" placeholder="Nhập số lượng sinh viên tối đa" min="1" required />
+        </div>
+
+        <div class="form-group">
+            <label for="numberOfSessions">Số buổi học</label>
+            <input type="number" id="numberOfSessions" th:field="*{numberOfSessions}" placeholder="Nhập số buổi học" min="1" required />
         </div>
 
         <div class="form-group">
             <label for="startDate">Ngày bắt đầu</label>
-            <input type="datetime-local" id="startDate" th:field="*{startDate}" required />
+            <input type="date" id="startDate" th:field="*{startDate}" required />
         </div>
 
         <div class="form-group">
             <label for="endDate">Ngày kết thúc</label>
-            <input type="datetime-local" id="endDate" th:field="*{endDate}" required />
+            <input type="date" id="endDate" th:field="*{endDate}" min="" required />
         </div>
 
         <div class="form-actions">
@@ -62,5 +67,31 @@
 
 <!-- Footer -->
 <footer th:replace="fragments/footer :: footer"></footer>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const startDateInput = document.getElementById("startDate");
+        const endDateInput = document.getElementById("endDate");
+
+        startDateInput.addEventListener("change", function () {
+            const startDateValue = startDateInput.value;
+            endDateInput.min = startDateValue; // Cập nhật giá trị min của endDate
+            if (endDateInput.value && endDateInput.value < startDateValue) {
+                alert("Ngày kết thúc phải sau ngày bắt đầu.");
+                endDateInput.value = ""; // Xóa giá trị endDate nếu không hợp lệ
+            }
+        });
+
+        endDateInput.addEventListener("change", function () {
+            const startDateValue = startDateInput.value;
+            const endDateValue = endDateInput.value;
+            if (endDateValue < startDateValue) {
+                alert("Ngày kết thúc phải sau ngày bắt đầu.");
+                endDateInput.value = ""; // Xóa giá trị endDate nếu không hợp lệ
+            }
+        });
+    });
+</script>
+
 </body>
 </html>

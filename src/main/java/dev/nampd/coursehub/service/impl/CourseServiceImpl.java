@@ -12,6 +12,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -27,6 +28,7 @@ public class CourseServiceImpl implements CourseService {
 
     @Override
     public void createCourse(CourseDto courseDto) {
+        validateCourseDates(courseDto.getStartDate(), courseDto.getEndDate());
         Course course = courseMapper.toCourse(courseDto);
 
         if (courseRepository.existsByName(course.getName())) {
@@ -53,12 +55,14 @@ public class CourseServiceImpl implements CourseService {
 
     @Override
     public void updateCourse(Long id, CourseDto updatedCourseDto) {
+        validateCourseDates(updatedCourseDto.getStartDate(), updatedCourseDto.getEndDate());
         Course existingCourse = courseRepository.findById(updatedCourseDto.getId())
                 .orElseThrow(() -> new EntityNotFoundException("Course not found"));
 
         existingCourse.setName(updatedCourseDto.getName());
         existingCourse.setDescription(updatedCourseDto.getDescription());
         existingCourse.setMaxSize(updatedCourseDto.getMaxSize());
+        existingCourse.setNumberOfSessions(updatedCourseDto.getNumberOfSessions());
         existingCourse.setFull(updatedCourseDto.isFull());
         existingCourse.setStartDate(updatedCourseDto.getStartDate());
         existingCourse.setEndDate(updatedCourseDto.getEndDate());
@@ -90,5 +94,11 @@ public class CourseServiceImpl implements CourseService {
                 coursePage.getTotalElements(),
                 coursePage.getTotalPages()
         );
+    }
+
+    private void validateCourseDates(LocalDate startDate, LocalDate endDate) {
+        if (endDate != null && startDate != null && endDate.isBefore(startDate)) {
+            throw new IllegalArgumentException("End date must be after start date.");
+        }
     }
 }

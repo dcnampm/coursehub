@@ -1,20 +1,31 @@
 package dev.nampd.coursehub.controller;
 
+import dev.nampd.coursehub.model.dto.CourseDto;
+import dev.nampd.coursehub.model.dto.EnrollmentDto;
 import dev.nampd.coursehub.model.dto.StudentDto;
 import dev.nampd.coursehub.model.response.PagedResponse;
+import dev.nampd.coursehub.service.CourseService;
+import dev.nampd.coursehub.service.EnrollmentService;
 import dev.nampd.coursehub.service.StudentService;
 import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Controller
 @RequestMapping("/students")
 public class StudentController {
     private final StudentService studentService;
+    private final EnrollmentService enrollmentService;
+    private final CourseService courseService;
 
-    public StudentController(StudentService studentService) {
+    public StudentController(StudentService studentService, EnrollmentService enrollmentService, CourseService courseService) {
         this.studentService = studentService;
+        this.enrollmentService = enrollmentService;
+        this.courseService = courseService;
     }
 
     @GetMapping
@@ -59,5 +70,18 @@ public class StudentController {
     public String deleteStudent(@PathVariable Long id) {
         studentService.deleteStudent(id);
         return "redirect:/students";
+    }
+
+    @GetMapping("/enrollments/{id}")
+    public String getEnrollmentsForStudent(@PathVariable Long id, Model model) {
+        List<EnrollmentDto> enrollmentsForStudent = enrollmentService.getEnrollmentsForStudent(id);
+
+        List<CourseDto> enrolledCourses = enrollmentsForStudent.stream()
+                .map(enrollment -> courseService.getCourseById(enrollment.getCourseId()))
+                .toList();
+
+        model.addAttribute("enrollments", enrollmentsForStudent);
+        model.addAttribute("courses", enrolledCourses);
+        return "course/enrolled-course-list";
     }
 }
