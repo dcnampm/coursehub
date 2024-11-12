@@ -28,7 +28,7 @@
                     </a>
                     <ul class="dropdown-menu">
                         <li><a class="dropdown-item" href="/courses">Tất cả</a></li>
-                        <li><a class="dropdown-item" th:href="@{/enrollments/student/{studentId}(studentId=${#authentication.principal.id})}">Đã đăng ký</a></li>
+                        <li><a class="dropdown-item" th:href="@{/students/enrollments/{id}(id=${#authentication.principal.id})}">Đã đăng ký</a></li>
                     </ul>
                 </li>
                 <li class="nav-item">

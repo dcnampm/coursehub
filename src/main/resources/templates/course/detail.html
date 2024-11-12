@@ -17,6 +17,10 @@
 <!-- Navbar -->
 <nav th:replace="fragments/navbar :: navbar"></nav>
 
+<br>
+
+<a th:href="@{/courses}" class="btn btn-secondary">Quay lại</a>
+
 <div class="container mt-4">
     <h1 class="text-center">Chi tiết khóa học</h1>
 
@@ -30,14 +34,18 @@
                 <strong>Trạng thái:</strong>
                 <span th:class="${course.isFull() ? 'text-danger' : 'text-success'}"
                       th:text="${course.isFull() ? 'Đã đầy' : 'Còn chỗ'}"
-                      style="font-style: italic;">Còn chỗ</span>
+                      style="font-style: italic;"></span>
             </li>
             <li class="list-group-item"><strong>Ngày bắt đầu:</strong> <span th:text="${course.startDate}"></span></li>
             <li class="list-group-item"><strong>Ngày kết thúc:</strong> <span th:text="${course.endDate}"></span></li>
             <li class="list-group-item">
-                <span th:text="${course.status}" th:class="${course.status == 'Đã kết thúc' ? 'text-danger' : (course.status == 'Đang diễn ra' ? 'text-warning' : 'text-success')}">
-                Trạng thái
+                <span th:text="${course.status}"
+                      th:class="${course.status == 'Đã kết thúc' ? 'text-danger' : (course.status == 'Đang diễn ra' ? 'text-warning' : 'text-success')}">
                 </span>
+            </li>
+            <li class="list-group-item" sec:authorize="hasRole('STUDENT')"><strong>Đăng ký:</strong>
+                <span th:text="${isEnrolled? 'Đã đăng ký' : 'Chưa đăng ký'}"
+                      th:class="${isEnrolled ? 'text-success' : 'text-danger'}"></span>
             </li>
             <li class="list-group-item" sec:authorize="hasRole('ADMIN')">
                 <strong>Danh sách sinh viên đăng ký</strong>
@@ -77,11 +85,28 @@
             <span th:text="${error}"></span>
         </div>
 
-        <form th:action="@{/enrollments/enroll}" method="post">
-            <input type="hidden" name="studentId" th:value="${#authentication.principal.id}" />
-            <input type="hidden" name="courseId" th:value="${course.id}" />
-            <button type="submit" class="btn btn-primary mt-3" sec:authorize="hasRole('STUDENT')">Đăng ký</button>
-        </form>
+<!--        <form th:action="@{/enrollments/enroll}" method="post" sec:authorize="hasRole('STUDENT')">-->
+<!--            <input type="hidden" name="studentId" th:value="${#authentication.principal.id}" />-->
+<!--            <input type="hidden" name="courseId" th:value="${course.id}" />-->
+<!--            <button type="submit" class="btn btn-primary mt-3" >Đăng ký</button>-->
+<!--        </form>-->
+
+        <div sec:authorize="hasRole('STUDENT')">
+            <div th:if="${isEnrolled}">
+                <form th:action="@{/enrollments/cancel}" method="post">
+                    <input type="hidden" name="studentId" th:value="${#authentication.principal.id}" />
+                    <input type="hidden" name="courseId" th:value="${course.id}" />
+                    <button type="submit" class="btn btn-dark mt-3">Hủy đăng ký</button>
+                </form>
+            </div>
+            <div th:if="${!isEnrolled}">
+                <form th:action="@{/enrollments/enroll}" method="post" onsubmit="this.querySelector('button').disabled = true;">
+                    <input type="hidden" name="studentId" th:value="${#authentication.principal.id}" />
+                    <input type="hidden" name="courseId" th:value="${course.id}" />
+                    <button type="submit" class="btn btn-primary mt-3">Đăng ký</button>
+                </form>
+            </div>
+        </div>
 
         <a th:href="@{/courses/edit/{id}(id=${course.id})}" class="btn btn-warning" sec:authorize="hasRole('ADMIN')">Sửa</a>
 

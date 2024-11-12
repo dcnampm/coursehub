@@ -5,9 +5,11 @@ import dev.nampd.coursehub.model.dto.EnrollmentDto;
 import java.util.List;
 
 public interface EnrollmentService {
-    EnrollmentDto enrollInCourse(Long studentId, Long courseId);
+    void enrollInCourse(Long studentId, Long courseId);
 
-    void cancelEnrollment(Long enrollmentId);
+    void cancelEnrollment(Long studentId, Long courseId);
+
+//    void deleteEnrollment(Long studentId, Long courseId);
 
     List<EnrollmentDto> getEnrollmentsForStudent(Long studentId);
 

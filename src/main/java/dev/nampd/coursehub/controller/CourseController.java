@@ -8,6 +8,8 @@ import dev.nampd.coursehub.service.CourseService;
 import dev.nampd.coursehub.service.EnrollmentService;
 import dev.nampd.coursehub.service.StudentService;
 import jakarta.validation.Valid;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -30,8 +32,8 @@ public class CourseController {
 
     @GetMapping
     public String getAllCourses(@RequestParam(defaultValue = "1") int page,
-                                 @RequestParam(defaultValue = "6") int size,
-                                 Model model) {
+                                @RequestParam(defaultValue = "6") int size,
+                                Model model) {
         PagedResponse<CourseDto> coursePagedResponse = courseService.getCoursesPaginated(page, size);
         model.addAttribute("courses", coursePagedResponse.getContent());
         model.addAttribute("currentPage", page);
@@ -41,7 +43,9 @@ public class CourseController {
     }
 
     @GetMapping("/detail/{id}")
-    public String getCourseDetail(@PathVariable Long id, Model model) {
+    public String getCourseDetail(@PathVariable Long id,
+                                  Model model,
+                                  @AuthenticationPrincipal UserDetails userDetails) {
         CourseDto courseDto = courseService.getCourseById(id);
         List<EnrollmentDto> enrollmentsForCourse = enrollmentService.getEnrollmentsForCourse(id);
 
@@ -49,9 +53,16 @@ public class CourseController {
                 .map(enrollment -> studentService.getStudentById(enrollment.getStudentId()))
                 .collect(Collectors.toList());
 
+        StudentDto currentStudent = studentService.getStudentByEmail(userDetails.getUsername());
+        Long studentId = currentStudent.getId();
+
+        boolean isEnrolled = enrollmentsForCourse.stream()
+                .anyMatch(enrollment -> enrollment.getStudentId().equals(studentId));
+
         model.addAttribute("enrollments", enrollmentsForCourse);
         model.addAttribute("course", courseDto);
         model.addAttribute("students", enrolledStudents);
+        model.addAttribute("isEnrolled", isEnrolled);
         return "course/detail";
     }
 

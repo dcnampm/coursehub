@@ -12,5 +12,4 @@ public class EnrollmentDto {
     private Long studentId;
     private Long courseId;
     private LocalDate enrollmentDate;
-    private boolean isActive;
 }

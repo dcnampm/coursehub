@@ -9,6 +9,7 @@
     <link rel="stylesheet" th:href="@{/css/navbar.css}">
     <link rel="stylesheet" th:href="@{/css/list.css}">
     <link rel="stylesheet" th:href="@{/css/pagination.css}">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
 
@@ -42,15 +43,15 @@
                 <td th:text="${student.email}"></td>
                 <td th:text="${student.password}"></td>
                 <td style="text-align: center;">
-                    <form th:action="@{/students/{id}(id=${student.id})}" method="get" style="display:inline;">
-                        <button type="submit">Xem khóa học đã đăng ký</button>
+                    <form th:action="@{/students/enrollments/{id}(id=${student.id})}" method="get" style="display:inline;">
+                        <button type="submit" class="btn btn-info">Xem khóa học đã đăng ký</button>
                     </form> |
                     <form th:action="@{/students/edit/{id}(id=${student.id})}" method="get" style="display:inline;">
-                        <button type="submit">Sửa</button>
+                        <button type="submit" class="btn btn-warning">Sửa</button>
                     </form> |
                     <form th:action="@{/students/delete/{id}(id=${student.id})}" method="post" style="display:inline;">
                         <input type="hidden" name="_method" value="delete">
-                        <button type="submit" onclick="return confirm('Bạn có chắc chắn muốn xóa sinh viên này?')">Xóa</button>
+                        <button type="submit" class="btn btn-danger" onclick="return confirm('Bạn có chắc chắn muốn xóa sinh viên này?')">Xóa</button>
                     </form>
                 </td>
             </tr>
@@ -61,12 +62,14 @@
     <div th:replace="fragments/pagination :: simple-pagination(baseUrl='/students', totalPages=${totalPages}, currentPage=${currentPage})"></div>
 
     <div class="create-button-container">
-        <a href="/students/new" class="create-button">Tạo mới</a>
+        <a href="/students/new" class="btn btn-success">Tạo mới</a>
     </div>
 </div>
 
 <!-- Footer -->
 <footer th:replace="fragments/footer :: footer"></footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
 
 </body>
 </html>

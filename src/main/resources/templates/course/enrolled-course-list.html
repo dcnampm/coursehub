@@ -19,6 +19,10 @@
 <!-- Navbar -->
 <nav th:replace="fragments/navbar :: navbar"></nav>
 
+<br>
+
+<a th:href="@{/students}" class="btn btn-secondary" sec:authorize="hasRole('ADMIN')">Quay lại</a>
+
 <div class="container mt-4">
     <h1 class="text-center">Khóa học đã đăng ký</h1>
 
@@ -38,16 +42,29 @@
                         <strong>Trạng thái:</strong>
                         <span th:class="${course.isFull() ? 'text-danger' : 'text-success'}"
                               th:text="${course.isFull() ? 'Đã đầy' : 'Còn chỗ'}"
-                              style="font-style: italic;">Còn chỗ</span><br>
+                              style="font-style: italic;"></span><br>
 
-                        <span th:text="${course.status}" th:class="${course.status == 'Đã kết thúc' ? 'text-danger' : (course.status == 'Đang diễn ra' ? 'text-warning' : 'text-success')}">
-                            Trạng thái
+                        <span th:text="${course.status}"
+                              th:class="${course.status == 'Đã kết thúc' ? 'text-danger' : (course.status == 'Đang diễn ra' ? 'text-warning' : 'text-success')}">
                         </span><br>
                     </p>
 
-                    <div class="d-flex justify-content-between">
-                        <a th:href="@{/enrollments/cancle/{enrollmentId}(enrollmentId=${course.e.id})}" class="btn btn-dark">Hủy đăng ký</a>
+                    <div class="d-flex justify-content-between" sec:authorize="hasRole('STUDENT')">
+                        <form th:action="@{/enrollments/cancel}" method="post">
+                            <input type="hidden" name="studentId" th:value="${#authentication.principal.id}" />
+                            <input type="hidden" name="courseId" th:value="${course.id}" />
+                            <button type="submit" class="btn btn-dark" onclick="return confirm('Bạn có chắc chắn muốn hủy đăng ký khóa học này?')">Hủy đăng ký</button>
+                        </form>
                     </div>
+
+<!--                    chưa lấy dc studentId-->
+<!--                    <div class="d-flex justify-content-between" sec:authorize="hasRole('ADMIN')">-->
+<!--                        <form th:action="@{/enrollments/cancel}" method="post">-->
+<!--                            <input type="hidden" name="studentId" th:value="${#authentication.principal.id}" />-->
+<!--                            <input type="hidden" name="courseId" th:value="${course.id}" />-->
+<!--                            <button type="submit" class="btn btn-dark" onclick="return confirm('Bạn có chắc chắn muốn xóa đăng ký của sinh viên này?')">Xóa đăng ký</button>-->
+<!--                        </form>-->
+<!--                    </div>-->
                 </div>
             </div>
         </div>

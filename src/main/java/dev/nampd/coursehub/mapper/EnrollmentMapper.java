@@ -11,8 +11,7 @@ public class EnrollmentMapper {
                 enrollment.getId(),
                 enrollment.getStudent().getId(),
                 enrollment.getCourse().getId(),
-                enrollment.getEnrollmentDate(),
-                enrollment.isActive()
+                enrollment.getEnrollmentDate()
         );
     }
 }

@@ -77,22 +77,6 @@ button:hover {
     margin-top: 20px;
 }
 
-.create-button {
-    display: inline-block;
-    padding: 10px 20px;
-    background-color: red; /* Nền đỏ */
-    color: white; /* Chữ trắng */
-    text-decoration: none; /* Bỏ gạch chân */
-    border-radius: 5px; /* Góc bo tròn */
-    font-size: 16px;
-    transition: background-color 0.3s ease; /* Hiệu ứng chuyển đổi */
-}
-
-.create-button:hover {
-    background-color: darkred; /* Nền khi hover */
-    cursor: pointer;
-}
-
 /* Style cho các thẻ input, select, textarea */
 input[type="text"],
 input[type="date"],

@@ -38,15 +38,18 @@
             <strong>Trạng thái:</strong>
             <span th:class="${course.isFull() ? 'text-danger' : 'text-success'}"
                   th:text="${course.isFull() ? 'Đã đầy' : 'Còn chỗ'}"
-                  style="font-style: italic;">Còn chỗ</span><br>
+                  style="font-style: italic;">
+            </span><br>
 
-            <span th:text="${course.status}" th:class="${course.status == 'Đã kết thúc' ? 'text-danger' : (course.status == 'Đang diễn ra' ? 'text-warning' : 'text-success')}">
-                Trạng thái
+            <strong>Thời gian:</strong>
+            <span th:text="${course.status}"
+                  th:class="${course.status == 'Đã kết thúc' ? 'text-danger' : (course.status == 'Đang diễn ra' ? 'text-warning' : 'text-success')}"
+                  style="font-style: italic;">
             </span><br>
           </p>
 
           <div class="d-flex justify-content-between">
-            <a th:href="@{/courses/detail/{id}(id=${course.id})}" class="btn btn-primary">Xem chi tiết</a>
+            <a th:href="@{/courses/detail/{id}(id=${course.id})}" class="btn btn-info">Xem chi tiết</a>
           </div>
         </div>
       </div>
@@ -55,7 +58,7 @@
 
   <div th:replace="fragments/pagination :: simple-pagination(baseUrl='/courses', totalPages=${totalPages}, currentPage=${currentPage})"></div>
 
-  <div class="text-center mt-4">
+  <div class="create-button-container mt-4">
     <a href="/courses/new" class="btn btn-success" sec:authorize="hasRole('ADMIN')">Tạo mới</a>
   </div>
 </div>

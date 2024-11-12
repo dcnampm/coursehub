@@ -26,16 +26,16 @@ public class EnrollmentController {
         return "redirect:/courses/detail/" + courseId;
     }
 
-    @PostMapping("/cancel/{enrollmentId}")
-    public String cancelEnrollment(@PathVariable Long enrollmentId,
+    @PostMapping("/cancel")
+    public String cancelEnrollment(@RequestParam Long studentId,
+                                   @RequestParam Long courseId,
                                    RedirectAttributes redirectAttributes) {
         try {
-            enrollmentService.cancelEnrollment(enrollmentId);
+            enrollmentService.cancelEnrollment(studentId, courseId);
             redirectAttributes.addFlashAttribute("message", "Hủy đăng ký thành công!");
         } catch (Exception e) {
             redirectAttributes.addFlashAttribute("error", e.getMessage());
         }
-        return "redirect:/courses";
+        return "redirect:/courses/detail/" +courseId;
     }
-
 }
