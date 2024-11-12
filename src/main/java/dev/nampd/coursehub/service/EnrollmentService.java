@@ -1,6 +1,7 @@
 package dev.nampd.coursehub.service;
 
 import dev.nampd.coursehub.model.dto.EnrollmentDto;
+import org.springframework.security.access.prepost.PreAuthorize;
 
 import java.util.List;
 
@@ -13,5 +14,6 @@ public interface EnrollmentService {
 
     List<EnrollmentDto> getEnrollmentsForStudent(Long studentId);
 
+    @PreAuthorize("hasRole('ADMIN')")
     List<EnrollmentDto> getEnrollmentsForCourse(Long courseId);
 }

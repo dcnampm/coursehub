@@ -21,6 +21,10 @@
                     <a class="nav-link" href="/students">Quản lý sinh viên</a>
                 </li>
 
+                <li class="nav-item" sec:authorize="hasRole('ADMIN')">
+                    <a class="nav-link" href="/reports">Báo cáo thống kê</a>
+                </li>
+
                 <!--for student-->
                 <li class="nav-item dropdown" sec:authorize="hasRole('STUDENT')">
                     <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -31,6 +35,7 @@
                         <li><a class="dropdown-item" th:href="@{/students/enrollments/{id}(id=${#authentication.principal.id})}">Đã đăng ký</a></li>
                     </ul>
                 </li>
+
                 <li class="nav-item">
                     <a class="nav-link" th:href="@{/logout}" data-method="post">Đăng xuất</a>
                 </li>

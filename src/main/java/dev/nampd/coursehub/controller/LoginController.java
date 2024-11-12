@@ -1,15 +1,11 @@
 package dev.nampd.coursehub.controller;
 
 import dev.nampd.coursehub.model.dto.RegisterDto;
-import dev.nampd.coursehub.model.dto.StudentDto;
 import dev.nampd.coursehub.service.StudentService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
