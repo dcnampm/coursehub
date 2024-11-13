@@ -16,7 +16,7 @@ public class WeeklyReport {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
+    private String title;
     private String createdBy;
 
     private LocalDateTime createdAt;

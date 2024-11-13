@@ -14,7 +14,8 @@ import java.util.List;
 public interface CourseRepository extends JpaRepository<Course, Long> {
     boolean existsByName(String name);
 
-    @Query("SELECT c FROM Course c WHERE c.startDate = :date AND c.maxSize > (SELECT COUNT(e) FROM Enrollment e WHERE e.course.id = c.id)")
-    List<CourseDto> findCoursesWithVacanciesStartingOn(LocalDate date);
+    @Query("SELECT c FROM Course c WHERE c.isFull = false AND c.startDate > :currentDate AND c.id NOT IN " +
+            "(SELECT e.course.id FROM Enrollment e WHERE e.student.id = :studentId)")
+    List<Course> findCoursesForStudentReminder(@Param("studentId") Long studentId, @Param("currentDate") LocalDate currentDate);
 
 }

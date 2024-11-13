@@ -38,20 +38,6 @@ public class Student implements UserDetails {
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return List.of(new SimpleGrantedAuthority("ROLE_" + this.role.name()));
-
-//        Set<GrantedAuthority> authorities = new HashSet<>();
-//        authorities.add(new SimpleGrantedAuthority("ROLE_" + this.getRole()));
-//
-//        Set<Permission> permissions = this.role.getPermissions();
-//        if (permissions == null || permissions.isEmpty()) {
-//            return authorities;
-//        }
-//
-//        permissions.forEach(permission -> {
-//            authorities.add(new SimpleGrantedAuthority(permission.getName()));
-//        });
-//
-//        return authorities;
     }
 
     @Override

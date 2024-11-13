@@ -10,14 +10,10 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 public class WeeklyReportDto {
     private Long id;
-
+    private String title;
     private String createdBy;
-
     private LocalDateTime createdAt;
-
     private LocalDate reportStartDate;
-
     private LocalDate reportEndDate;
-
     private String filePath;
 }
