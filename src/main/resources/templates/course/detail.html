@@ -85,12 +85,6 @@
             <span th:text="${error}"></span>
         </div>
 
-<!--        <form th:action="@{/enrollments/enroll}" method="post" sec:authorize="hasRole('STUDENT')">-->
-<!--            <input type="hidden" name="studentId" th:value="${#authentication.principal.id}" />-->
-<!--            <input type="hidden" name="courseId" th:value="${course.id}" />-->
-<!--            <button type="submit" class="btn btn-primary mt-3" >Đăng ký</button>-->
-<!--        </form>-->
-
         <div sec:authorize="hasRole('STUDENT')">
             <div th:if="${isEnrolled}">
                 <form th:action="@{/enrollments/cancel}" method="post">
