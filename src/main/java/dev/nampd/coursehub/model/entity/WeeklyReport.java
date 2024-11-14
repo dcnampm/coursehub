@@ -19,7 +19,7 @@ public class WeeklyReport {
     private String title;
     private String createdBy;
 
-    private LocalDateTime createdAt;
+    private LocalDate createdAt;
 
     private LocalDate reportStartDate;
 
@@ -29,7 +29,7 @@ public class WeeklyReport {
 
     public WeeklyReport() {}
 
-    public WeeklyReport(String createdBy, LocalDateTime createdAt, LocalDate reportStartDate, LocalDate reportEndDate, String filePath) {
+    public WeeklyReport(String createdBy, LocalDate createdAt, LocalDate reportStartDate, LocalDate reportEndDate, String filePath) {
         this.createdBy = createdBy;
         this.createdAt = createdAt;
         this.reportStartDate = reportStartDate;

@@ -14,6 +14,5 @@ public interface EnrollmentService {
 
     List<EnrollmentDto> getEnrollmentsForStudent(Long studentId);
 
-    @PreAuthorize("hasRole('ADMIN')")
     List<EnrollmentDto> getEnrollmentsForCourse(Long courseId);
 }

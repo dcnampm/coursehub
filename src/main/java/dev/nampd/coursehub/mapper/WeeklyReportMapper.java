@@ -9,6 +9,7 @@ public class WeeklyReportMapper {
     public WeeklyReportDto toWeeklyReportDto(WeeklyReport weeklyReport) {
         return new WeeklyReportDto(
                 weeklyReport.getId(),
+                weeklyReport.getTitle(),
                 weeklyReport.getCreatedBy(),
                 weeklyReport.getCreatedAt(),
                 weeklyReport.getReportStartDate(),

@@ -40,6 +40,7 @@ public class SecurityConfig {
                         .requestMatchers(WHITE_LIST_URL)
                         .permitAll()
                         .requestMatchers("/admin/**").hasRole("ADMIN")
+                        .requestMatchers("/student/**").hasRole("STUDENT")
                         .anyRequest()
                         .authenticated())
                 .formLogin(formLogin -> formLogin

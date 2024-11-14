@@ -1,10 +1,10 @@
 spring:
   application:
-    name: course hub
+    name: coursehub
   datasource:
     url: jdbc:mysql://localhost:3304/course_hub
-    username: ${DB_USERNAME}
-    password: ${DB_PASSWORD}
+    username: root
+    password: 123456a@
     driver-class-name: com.mysql.cj.jdbc.Driver
   jpa:
     database-platform: org.hibernate.dialect.MySQLDialect
@@ -24,11 +24,13 @@ spring:
   batch:
     jdbc:
       initialize-schema: always
+    job:
+      enabled: false
   mail:
     host: smtp.gmail.com
     port: 587
-    username: ${MAIL_USERNAME}
-    password: ${MAIL_PASSWORD}
+    username: nam.pd193034@gmail.com
+    password: vnhv azat dtew uwth
     properties:
       mail:
         smtp:
