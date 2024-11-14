@@ -115,8 +115,8 @@
 
                 @Override
                 public ExitStatus afterStep(StepExecution stepExecution) {
-                    //lưu thông tin báo cáo vo db
-                    String filePath = directoryPath + "/weekly_course_report_" + LocalDate.now().minusWeeks(1) + ".csv";
+                    //lưu thông tin báo cáo vào db
+                    String filePath = directoryPath + "/weekly_course_report_" + LocalDate.now().minusWeeks(1) + "_" +  LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMdd_HHmmss")) +  ".csv";
                     WeeklyReport report = new WeeklyReport();
                     report.setTitle("Weekly Course Enrollment Report");
                     report.setCreatedBy("System");

@@ -6,7 +6,6 @@ import org.springframework.security.access.prepost.PreAuthorize;
 
 import java.util.List;
 
-@PreAuthorize("hasRole('ADMIN')")
 public interface ReportService {
     PagedResponse<WeeklyReportDto> getWeeklyReportsPaginated(int page, int size);
 
